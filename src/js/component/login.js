@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link, useNavigate } from "react-router-dom";
 
-// import axios from "axios"
+import axios from "axios"
 
 export const Login = () => {
 	 //declaramos un estado para cada uno de los inputs

@@ -1,4 +1,5 @@
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import logo from '../../img/logo.png';
 import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../store/appContext';
 

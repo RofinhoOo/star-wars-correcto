@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import Planets from "../component/planets";
 import Vehicles from "../component/vehicles";
-// import { RingLoader } from 'react-spinners';
+import { RingLoader } from 'react-spinners';
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
