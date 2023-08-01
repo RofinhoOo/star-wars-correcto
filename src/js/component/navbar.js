@@ -1,17 +1,67 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { Context } from '../store/appContext';
 
 export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light mb-3">
-			<Link to="/">
-				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-			</Link>
-			<div className="ml-auto">
-				<Link to="/demo">
-					<button className="btn btn-primary">Check the Context in action</button>
-				</Link>
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
+  
+	function handleLogout() {
+		actions.logout()
+		navigate("/")
+	}
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+      <div className="container">
+        <Link className="navbar-brand" to="/">
+          <img src={logo} className="img-fluid" style={{ width: '200px' }} />
+        </Link>
+        <div className="dropstart">
+          <button
+            className="btn btn1 custom-btn"
+            id="dropdownMenuClickable"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            <strong>Favoritos</strong>
+          </button>
+          <ul className="dropdown-menu bg-dark border border-light" aria-labelledby="dropdownMenuClickableInside">
+            {store.favoritos.length > 0 ? (
+              store.favoritos.map((item, index) => {
+                return (
+
+                  <li key={index} className="dropdown-item bg-dark text-light">
+                    <span>
+                      <Link className="text-decoration-none text-warning" to={`/${item.categoria}/${item.id}`}>
+                        {item.name}
+                      </Link>
+                    </span>
+                    <button
+                      className="badge badge-danger text-white ms-2 justify-content-end"
+                      onClick={() => actions.borrarFavoritos(item)}
+                    >
+                      <i className="far fa-trash-alt text-dark" />
+                    </button>
+                  </li>
+                );
+              })
+            ) : (
+              <blockquote className="custom-blockquote">
+                <p className="quote-text">Añadir favoritos<i className="fa fa-heart" /></p>
+                <footer className="quote-author">Lucasfilms</footer>
+              </blockquote>
+            )}
+          </ul>
+          <div className="ml-auto">
+				{store.auth ? <button className="btn  btn-outline-warning m-1" onClick={handleLogout}> <strong>Logout</strong></button>: <Link to={"/login"}  className="btn  btn-outline-warning m-1"><strong>Login</strong></Link>}
+					
 			</div>
-		</nav>
-	);
+        </div>
+      </div>
+    </nav>
+  );
 };
